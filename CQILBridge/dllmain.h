@@ -1,5 +1,5 @@
 #pragma once
-#define CQAPPID "org.paspy.ilbridge" //请修改AppID，规则见 http://d.cqp.me/Pro/开发/基础信息
+#define CQAPPID "org.paspy.cqilbridge" //请修改AppID，规则见 http://d.cqp.me/Pro/开发/基础信息
 #define CQAPPINFO CQAPIVERTEXT "," CQAPPID
 
 #define CQAPIVER 9
