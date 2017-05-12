@@ -38,27 +38,22 @@ namespace CQILBridge.Framework {
                     }
                     foreach (string appFile in Directory.GetFiles(appFolder, "*.dll")) {
                         string appName = Path.GetFileNameWithoutExtension(appFile);
-                        //try {
-                            Assembly assembly = Assembly.Load(File.ReadAllBytes(appFile));
-                            foreach (Type type in assembly.GetTypes()) {
-                                if (!type.IsClass || type.IsNotPublic) {
-                                    continue;
-                                }
-                                Type[] tempInterfaces = type.GetInterfaces();
+                        Assembly assembly = Assembly.Load(File.ReadAllBytes(appFile));
+                        foreach (Type type in assembly.GetTypes()) {
+                            if (!type.IsClass || type.IsNotPublic) {
+                                continue;
+                            }
+                            Type[] tempInterfaces = type.GetInterfaces();
 
-                                if (tempInterfaces.Select(x => x.Name).Contains("ICQApp")) {
-                                    object appObj = Activator.CreateInstance(type);
-                                    var tmpAppName = ((ICQApp)appObj).AppName;
-                                    if (tmpAppName.StartsWith(BridgeName)) {
-                                        Instance = (ICQApp)appObj;
-                                        return Instance;
-                                    }
+                            if (tempInterfaces.Select(x => x.Name).Contains("ICQApp")) {
+                                object appObj = Activator.CreateInstance(type);
+                                var tmpAppName = ((ICQApp)appObj).AppName;
+                                if (tmpAppName.StartsWith(BridgeName)) {
+                                    Instance = (ICQApp)appObj;
+                                    return Instance;
                                 }
                             }
-
-                        //} catch (Exception) {
-                        //    throw;
-                        //}
+                        }
                     }
                 }
                 return Instance;
